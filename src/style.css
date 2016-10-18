@@ -1,0 +1,126 @@
+.notice {
+  display: block;
+  max-width: 470px;
+  background-color: yellow;
+  padding: 15px;
+  border: 1px solid black;
+  margin: 10px 0;
+}
+
+.title {
+  margin-bottom: 0;
+}
+
+h2 {
+  clear: both;
+}
+
+.subtitle {
+  margin-top: 0;
+}
+
+details {
+  display: inline-block;
+  max-width: 500px;
+}
+
+ul {
+  padding-left: 35px;
+  margin-bottom: 0;
+}
+
+li {
+  padding-left: 5px;
+  padding-bottom: 3px;
+}
+
+table {
+  border-collapse: collapse;
+  margin-bottom: 0;
+  margin-top: 1em;
+  clear: both;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+td, th {
+  padding: 10px;
+  text-align: center
+}
+
+form table, form td {
+  border: none;
+  padding: 10px 7px 0 0;
+}
+
+form td {
+  height: 25px;
+  vertical-align: middle;
+}
+
+form tr:last-child td {
+  text-align: right;
+}
+
+input {
+  padding: 2px;
+  border: solid 1px #bdbdbd;
+  border-radius: 2px;
+}
+
+#percentCell::after {
+  content: "%";
+}
+
+#hoursCell:after {
+  content: " hours";
+}
+
+#payCell:before {
+  content: "$";
+}
+
+#remissionCell {
+  font-size: 1.25em;
+  font-weight: bold;
+}
+
+#roundInfo {
+  display: none;
+  margin-bottom: 0;
+  width: 440px;
+}
+
+.last, .next {
+  width: 30%;
+}
+
+.last {
+  float: left;
+  text-align: left;
+}
+
+.next {
+  float: right;
+  text-align: right;
+}
+
+#scheduled, #current {
+  display: inline-block;
+  width: 50%;
+  margin-bottom: 2em;
+}
+
+.u {
+  text-decoration: underline;
+}
+
+#scheduled {
+  float: right;
+}
+
+#current {
+  float: left;
+}
