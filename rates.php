@@ -9,6 +9,14 @@
 
 include "/var/www/html/php-programs/globalLib.php";
 
+function date_format_display($datetime) {
+  return date_format($datetime, 'n/d/Y');
+}
+
+function date_format_server($datetime) {
+  return date_format($datetime, 'Y-m-d');
+}
+
 //list($smartHeader, $smartFooter) = getSetHeaderFooter("/human-resources/hire-a-student/gsrs/gsr-salary-calculator-admin/", "", 1);
 //print $smartHeader;
 
@@ -46,11 +54,11 @@ $firstRow = null;
 while (($row = oci_fetch_assoc($stid)) && ($row !== false)) {
   $date = new DateTime($row["EFFECTIVE_DATE"]);
   $row["Effective_DateTime"] = $date;
-  
+
   if (is_null($firstRow)) {
     $firstRow = $row;
   }
-  
+
   if ($date <= new DateTime()) {
     break;
   }
@@ -70,16 +78,16 @@ $scheduled = ($row !== $firstRow);
   <span class="u">Current Rate:</span>
   <br /><b>Max Hours:</b> <?= $row["MAX_HOURS"]; ?>
   <br /><b>Max Pay:</b> $<?= $row["MAX_PAY"]; ?>
-  <br /><b>Effective:</b> <?= date_format($row["Effective_DateTime"], 'n/j/Y'); ?>
+  <br /><b>Effective:</b> <?= date_format_display($row["Effective_DateTime"]); ?>
 </p>
 <p id="scheduled">
   <span class="u">Scheduled Rate:</span>
   <?php
   if ($scheduled) {
-    echo "(<a id=\"deleteRate\" href=\"deleteRate.php?date=".urlencode($firstRow["EFFECTIVE_DATE"])."\">Cancel this rate</a>)";
-    echo "<br /><b>Max Hours:</b> ".$firstRow["MAX_HOURS"];
-    echo "<br /><b>Max Pay:</b> \$".$firstRow["MAX_PAY"];
-    echo "<br /><b>Effective:</b> ".date_format($firstRow["Effective_DateTime"], 'n/j/Y');
+    echo "(<a id=\"deleteRate\" href=\"deleteRate.php?date=" . urlencode($firstRow["EFFECTIVE_DATE"]) . "\">Cancel this rate</a>)";
+    echo "<br /><b>Max Hours:</b> " . $firstRow["MAX_HOURS"];
+    echo "<br /><b>Max Pay:</b> \$" . $firstRow["MAX_PAY"];
+    echo "<br /><b>Effective:</b> " . date_format_display($firstRow["Effective_DateTime"]);
   } else {
     echo "<br /><b>No rate scheduled in the future.</b>";
   }
@@ -103,13 +111,13 @@ $scheduled = ($row !== $firstRow);
         <input type="number" name="max_pay" min="0" step="0.01" value="0" />
       </td>
       <td>
-        <input type="date" name="effective_date" min="<?= date_format($row["Effective_DateTime"], 'Y-m-d'); ?>" value="<?= date_format(new DateTime('tomorrow'), 'm/d/Y'); ?>" />
+        <input type="date" name="effective_date" min="<?= date_format_server($row["Effective_DateTime"]); ?>" value="<?= date_format_server(new DateTime('tomorrow')); ?>" />
       </td>
     </tr>
     <tr>
       <td colspan="3">
         <input type="hidden" name="is_scheduled" value="<?= (int)$scheduled; ?>" />
-        <input type="hidden" name="scheduled_date" value="<?= $firstRow["EFFECTIVE_DATE"]; ?>" />
+        <input type="hidden" name="scheduled_date" value="<?= date_format_server($firstRow["EFFECTIVE_DATE"]); ?>" />
         <input type="submit" value="Create" />
         <input type="reset" value="Reset" />
       </td>
@@ -117,7 +125,6 @@ $scheduled = ($row !== $firstRow);
   </table>
 </form>
 
-<?php 
-
-//print $smartFooter; 
+<?php
+//print $smartFooter;
 ?>
