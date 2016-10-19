@@ -9,10 +9,12 @@ $(function() {
 
   $("#updateRate").submit(function() {
     var inputDate = new Date($("input[name='effective_date']").val());
-    var today = new Date();
+    // .replace() hacks the date so that it isn't a day off
+    // See http://stackoverflow.com/questions/7556591/javascript-date-object-always-one-day-off#answer-31732581
+    var curr_effective_date = new Date($("input[name='curr_effective_date']").val().replace(/-/g, '\/'));
 
-    if (inputDate <= today) {
-      alert("You must input a date after today (" + today.toDateString() + ")");
+    if (inputDate <= curr_effective_date) {
+      alert("You must input a date after the current effective date (" + curr_effective_date.toDateString() + ")");
       return false;
     }
 
