@@ -8,7 +8,7 @@
  */
 
 include "/var/www/html/php-programs/globalLib.php";
-  
+
 $conn = oracleConnect("");
 useStandardDateFormat($conn);
 
@@ -23,7 +23,7 @@ $authUsers = array(
 
 if (ACLAuthOK($boaltID, $authUsers) && array_key_exists("max_hours", $_POST) && array_key_exists("max_pay", $_POST)
      && array_key_exists("effective_date", $_POST) && array_key_exists("is_scheduled", $_POST) && array_key_exists("scheduled_date", $_POST)) {
-  
+
   // Removes the scheduled (future) rate if there is one
   if ($_POST["is_scheduled"] == 1) {
     $q = "DELETE FROM
@@ -35,7 +35,7 @@ if (ACLAuthOK($boaltID, $authUsers) && array_key_exists("max_hours", $_POST) && 
     oci_bind_by_name($stid, ":scheduled_date", $_POST["scheduled_date"]);
     oci_execute($stid);
   }
-  
+
   $q = "INSERT INTO law_projects.gsr_rates (
           MAX_HOURS,
           MAX_PAY,
@@ -44,9 +44,9 @@ if (ACLAuthOK($boaltID, $authUsers) && array_key_exists("max_hours", $_POST) && 
         VALUES (
           :hours,
           :pay,
-          TO_DATE(:effective_date, 'MM-DD-YYYY')
+          TO_DATE(:effective_date, 'YYYY-MM-DD')
         )";
-    
+
   $stid = oci_parse($conn, $q);
   oci_bind_by_name($stid, ":hours", $_POST["max_hours"]);
   oci_bind_by_name($stid, ":pay", $_POST["max_pay"]);
@@ -56,6 +56,4 @@ if (ACLAuthOK($boaltID, $authUsers) && array_key_exists("max_hours", $_POST) && 
 
 header("Location: rates.php");
 die();
-?>
-
 ?>
