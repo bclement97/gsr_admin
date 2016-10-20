@@ -24,8 +24,8 @@ function date_format_server($datetime) {
   return date_format_default($datetime, 'Y-m-d');
 }
 
-list($smartHeader, $smartFooter) = getSetHeaderFooter("/human-resources/hire-a-student/gsrs/gsr-salary-calculator-admin/", "", 1);
-print $smartHeader;
+// list($smartHeader, $smartFooter) = getSetHeaderFooter("/human-resources/hire-a-student/gsrs/gsr-salary-calculator-admin/", "", 1);
+// print $smartHeader;
 
 $conn = oracleConnect("");
 useStandardDateFormat($conn);
@@ -125,8 +125,8 @@ $curr_effective_date = $row["Effective_DateTime"];
     <tr>
       <td colspan="3">
         <input type="hidden" name="curr_effective_date" value="<?= date_format_server($curr_effective_date); ?>" />
-        <input type="hidden" name="is_scheduled" value="<?= (int)$scheduled; ?>" />
-        <input type="hidden" name="scheduled_date" value="<?= date_format_server($firstRow["EFFECTIVE_DATE"]); ?>" />
+        <input type="hidden" name="is_scheduled" value="<?= (int) $scheduled; ?>" />
+        <input type="hidden" name="scheduled_date" value="<?= ($scheduled) ? $firstRow["EFFECTIVE_DATE"] : ""; ?>" />
         <input type="submit" value="Create" />
         <input type="reset" value="Reset" />
       </td>
